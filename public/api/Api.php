@@ -2,7 +2,7 @@
 
 namespace api;
 
-class Questions
+class Api
 {
     private $config;
     private $questions = [];
@@ -14,12 +14,14 @@ class Questions
     }
 
 
+    /**
+     * @return array
+     */
     public function getQuestions(){
         // Inizializza l'array per le domande
         $questions = [];
 
-
-// Itera sulle domande nel YAML e crea gli oggetti JSON corrispondenti
+        // Itera sulle domande nel YAML e crea gli oggetti JSON corrispondenti
         foreach ($this->config['questions'] as $questionIndex => $question) {
             $questionId = $questionIndex + 1;
             $options = [];
@@ -46,6 +48,30 @@ class Questions
             ];
         }
 
+        return $questions;
+
+    }
+
+    public function getUser()
+    {
+        
+    }
+    public function getResults()
+    {
+
+    }
+    public function saveAnswer()
+    {
+
+    }
+
+    public function getTopics()
+    {
+        $topics = [];
+        foreach ($this->config['topics'] as $topic) {
+            $topics[] = ['id' => $topic['id'], 'name' => $topic['name']];
+        }
+        return $topics;
     }
 
 }

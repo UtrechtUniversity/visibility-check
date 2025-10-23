@@ -57,7 +57,7 @@ The api_proxy can be server by a php development server
 
 4. start the local php proxy 
 
-    `$ php -S localhost:9000 -t public public/api.php`
+    `$ php -S localhost:9000 -t public`
    1. if needed, you can modify the value of the API_URL in .env.development
    
 6. Start the node server `$ npm start`

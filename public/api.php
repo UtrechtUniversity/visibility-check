@@ -9,6 +9,16 @@
  * @param zlib
  */
 
+
+/***
+ * Config
+ *
+ */
+
+define('API_URL', 'http://localhost:9000/api/index.php');
+
+include_once __DIR__ . '/includes/helpers.php';
+
 /**
  * Allowed origin: string
  * ex: http://localhost:3000/
@@ -25,7 +35,7 @@ $proxy = '127.0.0.1:16161';
 $enable_proxy = $_GET['proxy'] ?? false;
 
 // The url of the target API
-$url     = getenv('API_URL');
+$url     = API_URL;
 
 // List of resources that are allowed to be used
 $allowedResources = ['/questions', '/user', '/user/answer', '/user/score', '/test/url'];
