@@ -16,19 +16,28 @@ The Visibility Check is an online survey tool that help researcher to self asses
 
 ## Technology Stack
 
-This app uses a front end made in Javascript (REACT) and a backend in PHP/Mysql
+This app uses a front end made in Javascript (REACT) and a backend in PHP/Mysql 
 
 **Frontend used the following frameworks**
 - https://material-ui.com/  (UI)  
 - https://reactjs.org/ (JS FW) 
 
+**Backend used the following frameworks**
+- https://www.php.net/ (PHP)
+- https://www.mariadb.com/ (DB)
+- laravel (PHP FW)
+
 
 ## Configuration
 These variable can be configured depending on the running environment:
 
-- **FEEDBACK_FORM_URL** : The Url of the feedback form 
+- **FEEDBACK_FORM_URL** : The Url of the external feedback form 
 
 - **API_URL** : The url of the API that serves the questions and stores the answers
+
+When executing the app with docker compose, these variables are injected into the container environment.
+
+When running the app locally for developmen with nodejs these variable are read from the .env file directly
 
 ### API URL
 The API is served by the **vcadmin** app (https://vcadmin.library.uu.nl/api) and is accessed with the help of a php proxy: 

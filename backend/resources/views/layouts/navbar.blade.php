@@ -1,0 +1,56 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm">
+    <div class="container">
+        <a class="navbar-brand" href="{{ url('/') }}">
+            {{ config('app.name', 'Laravel') }}
+        </a>
+        <button class="navbar-toggler" type="button"
+                data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent"
+                aria-expanded="false"
+                aria-label="{{ __('Toggle navigation') }}">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <!-- Left Side Of Navbar -->
+{{--            @auth--}}
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('questions.index')}}">
+                            <span data-feather="file"></span>
+                            Questions
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('respondents.index')}}">
+                            <span data-feather="users"></span>
+                            Respondents
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('report.index')}}">
+                            <span data-feather="bar-chart-2"></span>
+                            Reports
+                        </a>
+                    </li>
+{{--                    <li class="nav-item">--}}
+{{--                        <a class="nav-link" href="{{route('pages.index')}}">--}}
+{{--                            <span data-feather="file"></span>--}}
+{{--                            Text--}}
+{{--                        </a>--}}
+{{--                    </li>--}}
+                </ul>
+{{--        @endauth--}}
+
+        <!-- Right Side Of Navbar -->
+            <ul class="navbar-nav ml-auto">
+                <!-- Guest Links -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('saml.logout') }}">{{ __('Logout') }}</a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+</nav>
+
