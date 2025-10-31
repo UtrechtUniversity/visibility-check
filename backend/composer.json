@@ -7,12 +7,6 @@
         "laravel"
     ],
     "license": "MIT",
-    "repositories": [
-        {
-            "type": "path",
-            "url":  "lib/laravel-simplesaml"
-        }
-    ],
     "require": {
         "php": "^8.0.2",
         "ext-json": "*",
@@ -23,9 +17,7 @@
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^9.0",
         "laravel/tinker": "^2.5",
-        "laravel/ui": "^3.0",
-        "simplesamlphp/saml2": "^4.4.1",
-        "ubu-developers/laravel-simplesaml": "*"
+        "laravel/ui": "^3.0"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.9",
@@ -51,12 +43,6 @@
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
         },
-        "psr-0": {
-            "SimpleSAML\\": "../simplesamlphp/lib/"
-        },
-        "files": [
-            "../simplesamlphp/lib/_autoload.php"
-        ],
         "classmap": [
             "database/seeders",
             "database/factories"

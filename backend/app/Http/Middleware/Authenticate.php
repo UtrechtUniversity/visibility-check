@@ -18,7 +18,7 @@ class Authenticate extends Middleware
 //            return route('login');
             // If there is no Laravel session we should logout from saml
             // and start authenticating again
-            return route('saml.logout');
+            return route('logout');
         }
     }
 }

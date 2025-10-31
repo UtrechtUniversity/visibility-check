@@ -18,7 +18,7 @@ class LoginController extends Controller
 
 
     /**
-     * Create a Laravel Session for the user after loggin in with SAML
+     * Create a Laravel Session for the user after login in
      *
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse

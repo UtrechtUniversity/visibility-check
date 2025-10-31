@@ -19,6 +19,8 @@ class CreateQuestionValuesTable extends Migration
             $table->integer('display_order');
             $table->string('value');
             $table->string('label');
+            $table->string('linktext')->nullable();
+            $table->string('linkurl')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

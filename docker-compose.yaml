@@ -18,48 +18,52 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
     ports:
-      - "8080:80"
+      - "8089:80"
 #    depends_on:
 #      - backend
     networks:
       - appnet
 
-#  backend:
-#    build:
-#      context: ./backend
-#      dockerfile: ./Dockerfile
-#    ports:
-#      - "8089:80"
-#    volumes:
-#      - ./backend:/var/www/html/:rw
-#    environment:
-#      - APP_ENV=local
-#      - APP_DEBUG=1
-#      - APP_KEY=${APP_KEY:-base64:dummykeydummykeydummykeydummykey==}
-#      - DB_CONNECTION=mysql
-#      - DB_HOST=mariadb
-#      - DB_PORT=3306
-#      - DB_DATABASE=visibilitycheck
-#      - DB_USERNAME=visibility
-#      - DB_PASSWORD=Ezr2EeAnqsOLpr0T
-#    depends_on:
-#      - mariadb
-#    networks:
-#      - appnet
-#
-#  mariadb:
-#    image: mariadb:12.0.2-noble
-#    ports:
-#      - "3366:3306"
-#    volumes:
-#      - ./docker/mariadb:/docker-entrypoint-initdb.d/:ro
-#    environment:
-#      MARIADB_DATABASE: visibilitycheck
-#      MARIADB_USER: visibility
-#      MARIADB_PASSWORD: Ezr2EeAnqsOLpr0T
-#      MARIADB_ROOT_PASSWORD: y4MnOxfdnAXJ7the
-#    networks:
-#      - appnet
+  backend:
+    image: php:8.2-apache
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8088:80"
+    volumes:
+      - ./backend:/var/www/html/:rw
+      - ./backend/docker/apache.conf:/etc/apache2/sites-available/000-default.conf
+    environment:
+      - APP_NAME=vcadmin
+      - APP_ENV=local
+      - APP_DEBUG=1
+      - APP_URL=http://localhost:8088
+      - APP_KEY=${APP_KEY:-base64:dummykeydummykeydummykeydummykey==}
+      - DB_CONNECTION=mysql
+      - DB_HOST=mariadb
+      - DB_PORT=3306
+      - DB_DATABASE=visibilitycheck
+      - DB_USERNAME=visibility
+      - DB_PASSWORD=Ezr2EeAnqsOLpr0T
+    depends_on:
+      - mariadb
+    networks:
+      - appnet
+
+  mariadb:
+    image: mariadb:12.0.2-noble
+    ports:
+      - "3366:3306"
+    volumes:
+      - ./docker/mariadb:/docker-entrypoint-initdb.d/:ro
+    environment:
+      MARIADB_DATABASE: visibilitycheck
+      MARIADB_USER: visibility
+      MARIADB_PASSWORD: Ezr2EeAnqsOLpr0T
+      MARIADB_ROOT_PASSWORD: y4MnOxfdnAXJ7the
+    networks:
+      - appnet
 
 networks:
   appnet:

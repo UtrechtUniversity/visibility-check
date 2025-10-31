@@ -17,52 +17,44 @@ use App\Http\Controllers\LoginController;
 */
 
 
-Route::middleware(['saml'])->group(function () {
 
-    //Create a user session
-    Route::get('/saml/login/user', [LoginController::class, 'loginWithSaml']);
+// Dashboard route
+Route::get('/', [HomeController::class, 'index'])
+    ->name('home');
 
-    Route::middleware(['auth'])->group(function () {
+//Visibilitycheck admin specific
+Route::resource('/questions', Visibilitycheck\QuestionController::class)
+    ->except('show');
 
-        // Dashboard route
-        Route::get('/', [HomeController::class, 'index'])
-            ->name('home');
+Route::resource('/respondents', Visibilitycheck\RespondentController::class)
+    ->only('index', 'show');
 
-        //Visibilitycheck admin specific
-        Route::resource('/questions', Visibilitycheck\QuestionController::class)
-            ->except('show');
+Route::delete(
+    '/respondets/purge',
+    [Visibilitycheck\RespondentController::class, 'purge']
+)->name('respondents.purge');
 
-        Route::resource('/respondents', Visibilitycheck\RespondentController::class)
-            ->only('index', 'show');
+Route::resource('options', Visibilitycheck\QuestionOptionController::class)
+    ->only('store', 'update', 'destroy');
 
-        Route::delete(
-            '/respondets/purge',
-            [Visibilitycheck\RespondentController::class, 'purge']
-        )->name('respondents.purge');
+Route::resource('/pages', Visibilitycheck\PageController::class)
+    ->only('index', 'edit', 'update');
 
-        Route::resource('options', Visibilitycheck\QuestionOptionController::class)
-            ->only('store', 'update', 'destroy');
+#Ordering of questions
+Route::get(
+    'questions/order/{question}/{direction}',
+    [Visibilitycheck\QuestionController::class, 'updateDisplayOrder']
+)->name('questions.order');
 
-        Route::resource('/pages', Visibilitycheck\PageController::class)
-            ->only('index', 'edit', 'update');
+Route::get(
+    'options/order/{option}/{direction}',
+    [Visibilitycheck\QuestionOptionController::class, 'updateDisplayOrder']
+)->name('options.order');
 
-        #Ordering of questions
-        Route::get(
-            'questions/order/{question}/{direction}',
-            [Visibilitycheck\QuestionController::class, 'updateDisplayOrder']
-        )->name('questions.order');
+Route::get('reports', [Visibilitycheck\ReportController::class, 'index'])->name('report.index');
+Route::get('reports/answers', [Visibilitycheck\ReportController::class, 'exportAnswers'])->name('report.answers');
 
-        Route::get(
-            'options/order/{option}/{direction}',
-            [Visibilitycheck\QuestionOptionController::class, 'updateDisplayOrder']
-        )->name('options.order');
 
-        Route::get('reports', [Visibilitycheck\ReportController::class, 'index'])->name('report.index');
-        Route::get('reports/answers', [Visibilitycheck\ReportController::class, 'exportAnswers'])->name('report.answers');
-
-    });
-
-});
 
 /**
 +-----------+----------------------------------------+--------------------------------------------------------------------------------+
@@ -90,9 +82,6 @@ Route::middleware(['saml'])->group(function () {
 | GET|HEAD  | respondents                            | App\Http\Controllers\Visibilitycheck\RespondentController@index                |
 | GET|HEAD  | respondents/{respondent}               | App\Http\Controllers\Visibilitycheck\RespondentController@show                 |
 | DELETE    | respondets/purge                       | App\Http\Controllers\Visibilitycheck\RespondentController@purge                |
-| GET|HEAD  | saml/login                             | SimplerSaml\Http\Controllers\SamlController@login                              |
-| GET|HEAD  | saml/login/user                        | App\Http\Controllers\LoginController@loginWithSaml                             |
-| GET|HEAD  | saml/logout                            | SimplerSaml\Http\Controllers\SamlController@logout                             |
 +-----------+----------------------------------------+--------------------------------------------------------------------------------+
  **/
 
