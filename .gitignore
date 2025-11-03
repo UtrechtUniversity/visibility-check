@@ -5,15 +5,14 @@
 /.pnp
 .pnp.js
 
-./frontend/node_modules
-./backend/vendor
+./frontend/node_modules/
+./backend/vendor/
 
 # testing
 /coverage
 
 # production
 /build
-/logs
 
 # misc
 .DS_Store

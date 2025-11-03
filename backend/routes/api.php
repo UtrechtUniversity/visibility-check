@@ -3,8 +3,6 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Visibilitycheck;
-
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -16,11 +14,11 @@ use App\Http\Controllers\Visibilitycheck;
 |
 */
 
-//Route::middleware('auth:api')->get('/user', function (Request $request) {
+//Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //    return $request->user();
 //});
 
-//Visibilitycheck admin specific
+
 Route::resource('/questions', Visibilitycheck\Api\QuestionController::class)
     ->only('index');
 
@@ -32,4 +30,5 @@ Route::post(
 
 Route::get(
     '/user/score', [Visibilitycheck\Api\RespondentController::class, 'getUserScore']);
+
 

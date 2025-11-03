@@ -17,18 +17,18 @@ return [
 
     'paths' => ['api/*', 'sanctum/csrf-cookie'],
 
-    'allowed_methods' => ['GET', 'POST', 'OPTIONS'],
+    'allowed_methods' => ['*'],
 
     'allowed_origins' => ['*'],
 
     'allowed_origins_patterns' => [],
 
-    'allowed_headers' => ['origin', 'authorization', 'cache-control', 'content-type'],
+    'allowed_headers' => ['*'],
 
-    'exposed_headers' => ['Cache-control'],
+    'exposed_headers' => [],
 
     'max_age' => 0,
 
-    'supports_credentials' => true,
+    'supports_credentials' => false,
 
 ];

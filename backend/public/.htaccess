@@ -23,4 +23,3 @@ DirectoryIndex index.php
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
 </IfModule>
-

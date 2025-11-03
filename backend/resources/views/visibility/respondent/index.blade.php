@@ -45,7 +45,7 @@
     </div>
     <br/>
     <br/>
-    <div>
+    <div class="respondents-pagination">
         {{$respondents->links()}}
     </div>
     <div class="table-responsive">

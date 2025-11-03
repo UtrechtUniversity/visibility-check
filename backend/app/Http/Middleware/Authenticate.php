@@ -15,10 +15,7 @@ class Authenticate extends Middleware
     protected function redirectTo($request)
     {
         if (! $request->expectsJson()) {
-//            return route('login');
-            // If there is no Laravel session we should logout from saml
-            // and start authenticating again
-            return route('logout');
+            return route('login');
         }
     }
 }
