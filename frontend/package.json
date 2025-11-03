@@ -19,7 +19,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build && date > build/build.txt",
+    "build": "react-scripts build && date > build/buildinfo.txt",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

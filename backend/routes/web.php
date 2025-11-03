@@ -19,15 +19,19 @@ use App\Http\Controllers\Visibilitycheck;
 //    return view('dashboard');
 //});
 
-Route::get('/', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::redirect('/', '/admin')->name('root');
 
 Route::middleware('auth')->group(function () {
 
+    Route::prefix('admin')->group(function () {
+
+        Route::get('/', function () {
+            return view('dashboard');
+        })->middleware(['verified'])->name('dashboard');
 
 
-//Visibilitycheck admin specific
+
+    //Visibilitycheck admin specific
     Route::resource(
         '/questions',
         Visibilitycheck\QuestionController::class
@@ -74,9 +78,10 @@ Route::middleware('auth')->group(function () {
      * End of visibility check routes
      */
 
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+        Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+        Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+        Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    });
 });
 
 require __DIR__ . '/auth.php';

@@ -1,7 +1,6 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 /logs
 # dependencies
-/node_modules
 /.pnp
 .pnp.js
 
@@ -11,8 +10,11 @@
 # testing
 /coverage
 
-# production
-/build
+# Build and vendor folders
+frontend/build/
+frontend/node_modules/
+backend/vendor/
+backend/node_modules/
 
 # misc
 .DS_Store
