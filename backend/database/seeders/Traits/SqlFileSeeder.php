@@ -11,7 +11,7 @@ trait SqlFileSeeder
      */
     protected function resolveSqlPath(): string
     {
-        $path = env('VC_SEED_SQL_PATH', '../docker/mariadb/AB_data.sql');
+        $path = env('VC_SEED_SQL_PATH', '../docker/mariadb/B_data.sql');
         // Allow relative paths (from backend folder base_path())
         $candidate = realpath(base_path($path)) ?: base_path($path);
         return $candidate;
