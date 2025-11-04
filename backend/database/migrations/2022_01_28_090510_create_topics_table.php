@@ -18,6 +18,7 @@ class CreateTopicsTable extends Migration
             $table->integer('display_order');
             $table->string('name');
             $table->string('info');
+            $table->boolean('enabled')->default(true);
             $table->timestamps();
         });
     }
