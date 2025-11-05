@@ -1,136 +1,147 @@
+# Visibility Check
 
+A lightweight survey application that helps researchers self‑assess their online visibility. It consists of a React frontend and a Laravel (PHP) backend with a MariaDB database.
 
-#Index
- 1. Introduction
- 2. Technology stack
- 3. Configuration
- 4. API URL
- 5. Development HOWTO
- 6. User session notes
- 7. App configuration
- 8. Available Scripts details
- 9. Learn More
+## Index
+- [Overview](#overview)
+- [Technology Stack](#technology-stack)
+- [Requirements](#requirements)
+- [Getting Started](#getting-started)
+  - [Run with Docker Compose](#run-with-docker-compose)
+  - [Manual Backend Setup](#manual-backend-setup)
+  - [Frontend Development (Local)](#frontend-development-local)
+- [Configuration](#configuration)
+  - [Frontend Environment Variables](#frontend-environment-variables)
+  - [API URL and PHP Proxy](#api-url-and-php-proxy)
+  - [How Configuration Is Loaded](#how-configuration-is-loaded)
+- [Admin App](#admin-app)
+- [User Session and Progress](#user-session-and-progress)
+- [NPM Scripts](#npm-scripts)
+- [Learn More](#learn-more)
 
-## Introduction
-The Visibility Check is an online survey tool that help researcher to self asses their online visibility.
+## Overview
+Visibility Check enables researchers to answer a set of questions about their online presence. Answers are stored **anonymously** via the backend API; Administrators can manage the survey content via the admin interface.
 
 ## Technology Stack
+- Frontend: React, Material UI
+  - https://create-react-app.dev/
+  - https://reactjs.org/
+  - https://mui.com/ (formerly material-ui.com)
+  - https://nginx.org
+  
+- Backend: PHP (Laravel), MariaDB
+  - https://laravel.com/
+  - https://mariadb.com/
+  - https://www.php.net/
+  - https://httpd.apache.org/
 
-This app uses a front end made in Javascript (REACT) and a backend in PHP/Mysql 
+## Requirements
+- Docker and Docker Compose (recommended), or
+- Node.js (for local frontend development)
+- PHP 8.2 and Composer (for backend), MariaDB 12
 
-**Frontend used the following frameworks**
-- https://material-ui.com/  (UI)  
-- https://reactjs.org/ (JS FW) 
+## Getting Started
 
-**Backend used the following frameworks**
-- https://www.php.net/ (PHP)
-- https://www.mariadb.com/ (DB)
-- laravel (PHP FW)
+### Run with Docker Compose
+A `docker-compose.yaml` is provided to build and run the full stack. On the first run, the **database will be created and seeded automatically**.
+The backend app is mounted as a volume, so changes to the code will be reflected immediately in the running container.
+The stack is configured to run on port 8088 for the frontend and 8089 for the admin app
 
+1. Install Docker and Docker Compose.
+2. Install composer
+3. In the backend/ directory run 
+   ```bash
+    composer install
+   ```
+4. From the project root, start the docker stack.
+   ```bash
+   docker compose up --build
+   ```
+5. You will now have a runnig application and you can access the apps:   
+   - Frontend: http://localhost:8089
+   - Admin: http://localhost:8088/admin
+   - API base URL: http://localhost:8088/api
+
+### Manual Backend Setup
+Only needed if you do not use Docker and prefer running locally or on your own server.
+
+1. Create the database and set connection details in `backend/.env`.
+2. Run migrations to create tables (in backend/ directory):
+   ```bash
+   php artisan migrate
+   ```
+3. Seed the database with initial content (in backend/ directory):
+   ```bash
+   php artisan db:seed
+   ```
+
+### Frontend Development (Local)
+To further deevelop and customize the app you can run the React dev server for a fast feedback loop; the server rebuilds on file save. 
+
+1. Install Node.js
+2. Go to the frontend directory: 
+   ``` bash 
+   cd frontend
+   ```
+2. Install JS dependencies:
+   ```bash
+   npm install
+   ```
+3. If needed adjust the configuration in  `frontemd/.env.development`:
+
+5. Start the React dev server:
+   ```bash
+   npm start
+   ```
+6. Develop as usual; the dev server auto-reloads on save.
 
 ## Configuration
-These variable can be configured depending on the running environment:
 
-- **FEEDBACK_FORM_URL** : The Url of the external feedback form 
+### Frontend Environment Variables
+The frontend dev and production build uses the REACT_APP_ prefix for environment variables. Refer to the react-app manual for more information: https://create-react-app.dev/docs/adding-custom-environment-variables/
 
-- **API_URL** : The url of the API that serves the questions and stores the answers
-
-When executing the app with docker compose, these variables are injected into the container environment.
-
-When running the app locally for developmen with nodejs these variable are read from the .env file directly
-
-### API URL
-The API is served by the **vcadmin** app (https://vcadmin.library.uu.nl/api) and is accessed with the help of a php proxy: 
-- The proxy script is in **public/api.php**
-
-The proxy can be configured for the following parameters:
-  - **Allowed resources**: which endpoint can be called
-  - **url**: the target url of the vcadmin api
-  - **proxy**: if you want to use a socks5 proxy, useful during development
+Two variables are needed:
+- `REACT_APP_API_URL`: Base URL of the API that serves questions and stores answers.
+- `REACT_APP_FEEDBACK_FORM_URL`: URL of the external feedback form that is displayed at the end of the survey.
 
 
-## Development HOWTO
-
-The app can be developed locally using nodejs development server that **rebuilds and serves** the frontend automatically 
-every time files of the frontend get saved to disk. 
-The api_proxy can be server by a php development server
-
-1. Install nodejs and php 
-
-2. install js application libraries
-   ```$ npm install```
-
-3. Set environment variable used by the proxy in .env.development: 
-
-    ` export API_URL='https://vcadmin-dev.library.uu.nl/api'`
-
-4. start the local php proxy 
-
-    `$ php -S localhost:9000 -t public`
-   1. if needed, you can modify the value of the API_URL in .env.development
-   
-6. Start the node server `$ npm start`
-
-7. Do your development, (the server is auto updated on every changed that is saved)
+### Backend Configuration
+The backend is configured via the `.env` file in the backend/ directory.
+This configuration follows the normal Laravel configuration format.
 
 
-## User session and progress notes
+## Admin App
+1. Open the admin UI: http://localhost:8088/admin
+2. Log in with the default credentials:
+   - Email: `test@example.com`
+   - Password: `password`
 
-![Session logic](docs/Session-Logic.png)
+Change these credentials immediately in any non-test environment.
 
+## Visibility Survey User Session and Progress
 
-## App Configuration
+The user session is stored in the database and is managed by the backend. 
+The session is identified by a unique session ID and is only attached to the user's browser. **No personal data is stored**
 
-There app loads the configuration in **two ways**:
-When you run a local **node** server: 
-- the node configuration is loaded from the `.env.development` file 
-When the app runs on the webserver (apache).
-- the configuration is read from apache environment variables and loaded by the public/env.js.php file
+![Session logic](documentation/Session-Logic.png)
 
-The **src/helpers/Config.js** class detects the right configuration to use 
-
-
-
-## NPM Scripts details
-
+## NPM Scripts
 In the project directory, you can run:
 
 ### `npm start`
-
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+Runs the app in development mode and opens http://localhost:3000. The page reloads on edits and displays lint errors in the console.
 
 ### `npm test`
-
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Launches the test runner in watch mode. See Create React App docs for details.
 
 ### `npm run build`
-
-Builds the app for production to the `docs` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Builds the app for production to the `frontend/build` folder. React is bundled in production mode and optimized for performance. Filenames include content hashes.
 
 ### `npm run eject`
+Note: this is a one-way operation. Once you eject, you cannot go back.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-
+If the default configuration is insufficient, `eject` will copy all config files and dependencies (Webpack, Babel, ESLint, etc.) into your project so you have full control. All commands except `eject` will continue to work, but they will reference the copied scripts.
 
 ## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- Create React App: https://facebook.github.io/create-react-app/docs/getting-started
 

@@ -17,7 +17,8 @@
 
 define('API_URL', 'http://localhost:9000/api/index.php');
 
-include_once __DIR__ . '/includes/helpers.php';
+// Include for debugging
+include_once __DIR__ . '/inc/helpers.php';
 
 /**
  * Allowed origin: string
@@ -31,7 +32,7 @@ $allowedOrigin = 'http://localhost:3000';
  * or another type of proxy
  * Modify the $proxy as needed
  */
-$proxy = '127.0.0.1:16161';
+$proxy = 'localhost:8088';
 $enable_proxy = $_GET['proxy'] ?? false;
 
 // The url of the target API
