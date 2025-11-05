@@ -18,8 +18,9 @@
                       </div>
                     @endif
                     @if (Auth::guard('web')->user())
-                      Hi, {{ Auth::guard('web')->user()->name }}, {{ __('you are logged in!') }}
-                    @endif
+                        Hi, {{ Auth::guard('web')->user()->name }}, {{ __('you are logged in!') }}
+                        <a href="{{ route('profile.edit') }}" class="btn btn-link">Edit Profile</a>
+                      @endif
                   </div>
                 </div>
             </div>

@@ -42,7 +42,7 @@ Visibility Check enables researchers to answer a set of questions about their on
 
 ## Getting Started
 
-### Run with Docker Compose
+### Run the apps with Docker Compose
 A `docker-compose.yaml` is provided to build and run the full stack. On the first run, the **database will be created and seeded automatically**.
 The backend app is mounted as a volume, so changes to the code will be reflected immediately in the running container.
 The stack is configured to run on port 8088 for the frontend and 8089 for the admin app
@@ -53,16 +53,25 @@ The stack is configured to run on port 8088 for the frontend and 8089 for the ad
    ```bash
     composer install
    ```
-4. From the project root, start the docker stack.
+4. From the project root, start the docker stack. This will build the frontend app and the backend app.
    ```bash
    docker compose up --build
    ```
-5. You will now have a runnig application and you can access the apps:   
+5. You will now have a running application, you can access the apps:   
    - Frontend: http://localhost:8089
    - Admin: http://localhost:8088/admin
    - API base URL: http://localhost:8088/api
+   
+### Admin App
+1. Open the admin UI: http://localhost:8088/admin
+2. Log in with the default credentials:
+    - Email: `test@example.com`
+    - Password: `password`
 
-### Manual Backend Setup
+Change these credentials immediately in any non-test environment.
+
+
+## Manual Backend Setup
 Only needed if you do not use Docker and prefer running locally or on your own server.
 
 1. Create the database and set connection details in `backend/.env`.
@@ -75,7 +84,7 @@ Only needed if you do not use Docker and prefer running locally or on your own s
    php artisan db:seed
    ```
 
-### Frontend Development (Local)
+## Frontend Development (Local)
 To further deevelop and customize the app you can run the React dev server for a fast feedback loop; the server rebuilds on file save. 
 
 1. Install Node.js
@@ -109,14 +118,15 @@ Two variables are needed:
 The backend is configured via the `.env` file in the backend/ directory.
 This configuration follows the normal Laravel configuration format.
 
+### Adding Users
+This app has a minimal user management. Users can be added via the admin app.
 
-## Admin App
-1. Open the admin UI: http://localhost:8088/admin
-2. Log in with the default credentials:
-   - Email: `test@example.com`
-   - Password: `password`
+https://localhost:8088/register
 
-Change these credentials immediately in any non-test environment.
+## Backend Production build 
+A prod.Dockerfile is provided as an example to build a production-ready Docker image.
+This Dockerfile import the laravel dependencies first with a composer container and then copies the source code to a new PHP/Apache container.
+
 
 ## Visibility Survey User Session and Progress
 
