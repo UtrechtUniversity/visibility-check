@@ -21,3 +21,7 @@ RUN docker-php-ext-install pdo pdo_mysql mbstring exif pcntl bcmath gd
 COPY ./docker/apache.conf /etc/apache2/sites-enabled/000-default.conf
 RUN a2enmod rewrite
 
+# Configure Laravel
+RUN php artisan key:generate --force
+
+
