@@ -2,20 +2,22 @@
 
 A lightweight survey application that helps researchers self‑assess their online visibility. It consists of a React frontend and a Laravel (PHP) backend with a MariaDB database.
 
+
 ## Index
 - [Overview](#overview)
 - [Technology Stack](#technology-stack)
 - [Requirements](#requirements)
 - [Getting Started](#getting-started)
-  - [Run with Docker Compose](#run-with-docker-compose)
-  - [Manual Backend Setup](#manual-backend-setup)
-  - [Frontend Development (Local)](#frontend-development-local)
+    - [Run the apps with Docker Compose](#run-the-apps-with-docker-compose)
+    - [Admin App](#admin-app)
+- [Manual Backend Setup](#manual-backend-setup)
+- [Frontend Development (Local)](#frontend-development-local)
 - [Configuration](#configuration)
-  - [Frontend Environment Variables](#frontend-environment-variables)
-  - [API URL and PHP Proxy](#api-url-and-php-proxy)
-  - [How Configuration Is Loaded](#how-configuration-is-loaded)
-- [Admin App](#admin-app)
-- [User Session and Progress](#user-session-and-progress)
+    - [Frontend Environment Variables](#frontend-environment-variables)
+    - [Backend Configuration](#backend-configuration)
+    - [Adding Users](#adding-users)
+- [Backend Production build](#backend-production-build)
+- [Visibility Survey User Session and Progress](#visibility-survey-user-session-and-progress)
 - [NPM Scripts](#npm-scripts)
 - [Learn More](#learn-more)
 
