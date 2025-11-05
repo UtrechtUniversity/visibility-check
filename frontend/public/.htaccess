@@ -1,0 +1,23 @@
+DirectoryIndex index.html
+
+
+<IfModule mod_rewrite.c>
+	RewriteEngine On
+
+	#Matching API
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteCond %{REQUEST_FILENAME} !-l
+	RewriteCond "%{REQUEST_URI}" "^/visibilitycheck"
+	RewriteRule ^(.*)$ api.php [QSA,L]
+
+    #Matching APP
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-l
+	RewriteRule . /index.html [L]
+</IfModule>
+<IfModule mod_php5.c>
+	php_flag display_errors On
+	php_flag magic_quotes_gpc Off
+</IfModule>

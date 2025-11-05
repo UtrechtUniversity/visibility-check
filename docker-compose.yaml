@@ -1,0 +1,46 @@
+name: visibilitycheck
+
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "8089:80"
+    depends_on:
+      - backend
+    networks:
+      - appnet
+
+  backend:
+    image: php:8.2-apache
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8088:80"
+    volumes:
+      - ./backend:/var/www/html/:rw
+      - ./backend/docker/apache.conf:/etc/apache2/sites-available/000-default.conf
+    depends_on:
+      - mariadb
+    networks:
+      - appnet
+
+  mariadb:
+    image: mariadb:12.0.2-noble
+    ports:
+      - "3366:3306" # expose for debugging
+    volumes:
+      - ./docker/mariadb:/docker-entrypoint-initdb.d/:ro
+    environment:
+      MARIADB_DATABASE: visibilitycheck
+      MARIADB_USER: visibility
+      MARIADB_PASSWORD: Ezr2EeAnqsOLpr0T
+      MARIADB_ROOT_PASSWORD: y4MnOxfdnAXJ7the
+    networks:
+      - appnet
+
+networks:
+  appnet:
+    driver: bridge
