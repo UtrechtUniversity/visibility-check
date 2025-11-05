@@ -2,6 +2,7 @@
 
 A lightweight survey application that helps researchers self‑assess their online visibility. It consists of a React frontend and a Laravel (PHP) backend with a MariaDB database.
 
+![Visibility Check Logo](documentation/vcheck-logo.png)
 
 ## Index
 - [Overview](#overview)
@@ -70,21 +71,28 @@ The stack is configured to run on port 8088 for the frontend and 8089 for the ad
     - Email: `test@example.com`
     - Password: `password`
 
-Change these credentials immediately in any non-test environment.
+**!! Change these credentials immediately in any non-test environment !!**
 
 
 ## Manual Backend Setup
 Only needed if you do not use Docker and prefer running locally or on your own server.
 
 1. Create the database and set connection details in `backend/.env`.
-2. Run migrations to create tables (in backend/ directory):
+2. Generate an APP_KEY it will be written to the `.env` file
+    ```bash
+    php artisan key:generate
+    ```
+3. Run migrations to create tables (in backend/ directory):
    ```bash
    php artisan migrate
    ```
-3. Seed the database with initial content (in backend/ directory):
+4. Seed the database with initial content (in backend/ directory):
    ```bash
    php artisan db:seed
    ```
+
+
+
 
 ## Frontend Development (Local)
 To further deevelop and customize the app you can run the React dev server for a fast feedback loop; the server rebuilds on file save. 

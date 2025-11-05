@@ -12,7 +12,7 @@ COPY . ./
 RUN npm run build
 
 
-FROM nginx:stable-alpine
+FROM nginx:1.27.1-alpine
 
 
 # Configure Nginx

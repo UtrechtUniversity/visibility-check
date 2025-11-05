@@ -10,7 +10,7 @@ services:
     depends_on:
       - backend
     networks:
-      - appnet
+      - vcnet
 
   backend:
     image: php:8.2-apache
@@ -25,22 +25,22 @@ services:
     depends_on:
       - mariadb
     networks:
-      - appnet
+      - vcnet
 
   mariadb:
     image: mariadb:12.0.2-noble
     ports:
       - "3366:3306" # expose for debugging
     volumes:
-      - ./docker/mariadb:/docker-entrypoint-initdb.d/:ro
+      - ./backend/docker/mariadb:/docker-entrypoint-initdb.d/:ro
     environment:
       MARIADB_DATABASE: visibilitycheck
       MARIADB_USER: visibility
-      MARIADB_PASSWORD: Ezr2EeAnqsOLpr0T
-      MARIADB_ROOT_PASSWORD: y4MnOxfdnAXJ7the
+      MARIADB_PASSWORD: m1PM2PRaJx
+      MARIADB_ROOT_PASSWORD: g8whwXJJVJ
     networks:
-      - appnet
+      - vcnet
 
 networks:
-  appnet:
+  vcnet:
     driver: bridge
